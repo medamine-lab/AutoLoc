@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "paiement")
@@ -21,18 +20,14 @@ public class Paiement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPaiement;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal montant;
 
-    @Column(nullable = false)
-    private LocalDate datePaiement;
+    private LocalDateTime datePaiement;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private ModePaiement modePaiement;
 
-    // Paiement * --- 1 Contrat (côté propriétaire)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "contrat_id", nullable = false)
+    @ManyToOne
     private Contrat contrat;
 }

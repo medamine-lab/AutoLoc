@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "equipement")
@@ -21,10 +20,8 @@ public class Equipement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEquipement;
 
-    @Column(nullable = false, length = 100)
     private String libelle;
 
-    // Equipement * --- * Vehicule (côté inverse)
-    @ManyToMany(mappedBy = "equipements")
-    private Set<Vehicule> vehicules = new HashSet<>();
+    @ManyToMany
+    private List<Vehicule> vehicules;
 }

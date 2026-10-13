@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,23 +20,12 @@ public class Agence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAgence;
 
-    @Column(nullable = false, length = 100)
     private String nom;
-
-    @Column(nullable = false, length = 50)
     private String ville;
-
-    @Column(nullable = false, length = 150)
     private String adresse;
-
-    @Column(length = 20)
     private String telephone;
-
-    // Agence 1 --- * Employe
     @OneToMany(mappedBy = "agence")
-    private List<Employe> employes = new ArrayList<>();
-
-    // Agence 1 --- * Vehicule
+    private List<Employe> employees;
     @OneToMany(mappedBy = "agence")
-    private List<Vehicule> vehicules = new ArrayList<>();
+    private List<Vehicule> vehicules;
 }

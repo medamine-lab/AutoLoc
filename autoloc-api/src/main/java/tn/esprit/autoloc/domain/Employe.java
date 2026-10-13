@@ -18,18 +18,12 @@ public class Employe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmploye;
 
-    @Column(nullable = false, length = 50)
     private String nom;
-
-    @Column(nullable = false, length = 50)
     private String prenom;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private RoleEmploye role;
 
-    // Employe * --- 1 Agence (côté propriétaire : porte la clé étrangère)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "agence_id", nullable = false)
+    @ManyToOne
     private Agence agence;
 }

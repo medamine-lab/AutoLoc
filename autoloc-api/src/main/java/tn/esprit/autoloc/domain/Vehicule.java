@@ -6,11 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.swing.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "vehicule")
@@ -44,25 +42,15 @@ public class Vehicule {
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
 
-    // Vehicule * --- 1 Agence (côté propriétaire)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "agence_id", nullable = false)
+    @ManyToOne
     private Agence agence;
 
-    // Vehicule 1 --- * Maintenance
     @OneToMany(mappedBy = "vehicule")
-    private List<Maintenance> maintenances = new ArrayList<>();
+    private List<Reservation> reservations;
 
-    // Vehicule 1 --- * Reservation
-    @OneToMany(mappedBy = "vehicule")
-    private List<Reservation> reservations = new ArrayList<>();
+    @ManyToMany(mappedBy = "vehicules")
+    private List<Equipement> equipements;
 
-    // Vehicule * --- * Equipement (côté propriétaire : table de jointure)
-    @ManyToMany
-    @JoinTable(
-            name = "vehicule_equipement",
-            joinColumns = @JoinColumn(name = "vehicule_id"),
-            inverseJoinColumns = @JoinColumn(name = "equipement_id")
-    )
-    private Set<Equipement> equipements = new HashSet<>();
+    @OneToMany
+    private List<Maintenance> maintenance;
 }

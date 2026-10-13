@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,21 +21,16 @@ public class Contrat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idContrat;
 
-    @Column(nullable = false)
     private LocalDate dateSignature;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(precision = 10, scale = 2)
     private BigDecimal montantTotal;
 
-    @Column(nullable = false)
-    private boolean valide;
+    private Boolean valide;
 
-    // Contrat 1 --- 1 Reservation (côté propriétaire : clé étrangère unique)
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "reservation_id", nullable = false, unique = true)
+    @OneToOne
     private Reservation reservation;
 
-    // Contrat 1 <>--- * Paiement (composition : les paiements vivent et meurent avec le contrat)
-    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Paiement> paiements = new ArrayList<>();
+    @OneToMany(mappedBy = "contrat",  cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paiement> paiements;
 }

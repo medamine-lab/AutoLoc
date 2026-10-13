@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDate;
 
 @Entity
@@ -20,27 +19,18 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReservation;
 
-    @Column(nullable = false)
     private LocalDate dateDebut;
-
-    @Column(nullable = false)
     private LocalDate dateFin;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private StatutReservation statut;
 
-    // Reservation * --- 1 Vehicule (côté propriétaire)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "vehicule_id", nullable = false)
+    @ManyToOne
     private Vehicule vehicule;
 
-    // Reservation * --- 1 Client (côté propriétaire)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "client_id", nullable = false)
+    @ManyToOne
     private Client client;
 
-    // Reservation 1 --- 1 Contrat (côté inverse)
     @OneToOne(mappedBy = "reservation")
     private Contrat contrat;
 }
